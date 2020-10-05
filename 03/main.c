@@ -27,7 +27,7 @@ int calcSquareEq(int a, int b, int c, double* x1, double* x2) {
 		return -1;
 	// Проверка на случай ввода 0*x^2 + 2*x + c = 0
 	if ((a == 0) && (b != 0)) {
-		*x1 = -c / b;
+		*x1 = (double)-c / b;
 		return 0;
 	}
 	int d;
