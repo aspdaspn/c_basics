@@ -2,7 +2,7 @@
 *
 * Homework 04
 * By Ilya Nikolskiy
-* 07.10.2020
+* 10.10.2020
 *
 *1. Описать функцию, возвращающую строку с двоичным представлением положительного целого десятичного числа, переданного в аргументе этой функции.
 *2. Описать структуру "прямоугольник", содержащую целочисленные значения длины, ширины, периметра и площади прямоугольника. Написать функцию, принимающую на вход указатель на структуру, подсчитывающую и записывающую площадь и периметр данного прямоугольника в структуру.
@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#define ROWS 10
+#define COLUMNS 10
 
 struct rectangle {
 	int length;
@@ -71,6 +74,7 @@ Rectangle r;
 Line l;
 int d;
 char out[33];
+int i, c;
 
 int main() {
 	// Задание 1
@@ -98,5 +102,30 @@ int main() {
 	calcLineLength(&l);
 	printf("Длина линии %.2f условных единиц.\n", l.length);
 	
+	// Задание 4
+	int *array = calloc(COLUMNS * ROWS, sizeof(int));
+	for (i = 0; i < ROWS; i++) {
+		for (c = 0; c < COLUMNS; c++) {
+			printf("%4d", *(array + i * ROWS + c));
+		}
+		printf("\n");
+	}
+
+	for (i = 0; i < ROWS; i++) {
+		for (c = 0; c < COLUMNS; c++) {
+			*(array + i * ROWS + c) = (i + 1) * (c + 1);
+		}
+	}
+
+	printf("\n");
+	
+	for (i = 0; i < ROWS; i++) {
+		for (c = 0; c < COLUMNS; c++) {
+			printf("%4d", *(array + i * ROWS + c));
+		}
+		printf("\n");
+	}
+
+	free(array);
 	return 0;
 }
