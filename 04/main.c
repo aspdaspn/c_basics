@@ -16,26 +16,23 @@
 #define ROWS 10
 #define COLUMNS 10
 
-struct rectangle {
+typedef struct rectangle {
 	int length;
 	int width;
 	int perimeter;
 	int square;
-};
-typedef struct rectangle Rectangle;
+} Rectangle;
 
-struct point {
+typedef struct point {
 	int pos_x;
 	int pos_y;
-};
-typedef struct point Point;
+} Point;
 
-struct line {
+typedef struct line {
 	Point point_a;
 	Point point_b;
 	float length;
-};
-typedef struct line Line;
+} Line;
 
 void calcRectangle(Rectangle *r) {
 	r->square = r->length * r->width;
@@ -66,8 +63,25 @@ void printBinary(int *d, char *out) {
 		out [e] = out [e] - out [b];
 		e--;
 	}
-	// добавим символ Line Feed
-	out [i] = 10;			
+	// добавим символ Line Feed и терминатор строки
+	out [i] = '\0';			
+	out [i++] = 10;			
+}
+
+int *arrayInt(int *array, unsigned len) {
+	array = (int *) calloc(len, sizeof(int));
+	return array;
+}
+
+void printArray(int *array) {
+int i = 0;
+int c = 0;
+printf("Массив:\n");
+	for (i = 0; i < ROWS; i++){
+		for (c = 0; c < COLUMNS; c++) 
+			printf("%4d", *(array + i * ROWS + c));
+		printf("\n");
+	}
 }
 
 Rectangle r;
@@ -103,29 +117,14 @@ int main() {
 	printf("Длина линии %.2f условных единиц.\n", l.length);
 	
 	// Задание 4
-	int *array = calloc(COLUMNS * ROWS, sizeof(int));
-	for (i = 0; i < ROWS; i++) {
-		for (c = 0; c < COLUMNS; c++) {
-			printf("%4d", *(array + i * ROWS + c));
-		}
-		printf("\n");
-	}
+	int *array = arrayInt(array, COLUMNS * ROWS); 
+	printArray(array);
 
-	for (i = 0; i < ROWS; i++) {
-		for (c = 0; c < COLUMNS; c++) {
+	for (i = 0; i < ROWS; i++)
+		for (c = 0; c < COLUMNS; c++)
 			*(array + i * ROWS + c) = (i + 1) * (c + 1);
-		}
-	}
 
-	printf("\n");
-	
-	for (i = 0; i < ROWS; i++) {
-		for (c = 0; c < COLUMNS; c++) {
-			printf("%4d", *(array + i * ROWS + c));
-		}
-		printf("\n");
-	}
-
+	printArray(array);
 	free(array);
 	return 0;
 }
